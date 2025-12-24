@@ -12,4 +12,4 @@ P. Cortez and A. Silva. Using Data Mining to Predict Secondary School Student Pe
 
 
 ## Setup
-`pip install -r requirements.txt`
+`make start`
