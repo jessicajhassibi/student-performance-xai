@@ -14,3 +14,6 @@ Note: You will need a kaggle API token to download the dataset
 
 ## Setup
 `make start`
+
+## Run Streamlit App with nice visualizations
+`streamlit run student_performance_xai/app/app.py`'
