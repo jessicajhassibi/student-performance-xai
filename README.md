@@ -15,5 +15,22 @@ Note: You will need a kaggle API token to download the dataset
 ## Installation of dependencies
 `make install`
 
-## Run Streamlit App with nice visualizations
-`streamlit run student_performance_xai/app/app.py`'
+### Running the project (option A: Via Makefile)
+```
+make setup 
+make setup 
+make data
+make train
+make explain
+make app
+```
+
+
+### Running the project (option B: manual)
+```
+pip install -r requirements.txt
+python scripts/download_dataset.py
+python scripts/train_model.py
+python scripts/run_explainability.py
+streamlit run app/app.py
+```
