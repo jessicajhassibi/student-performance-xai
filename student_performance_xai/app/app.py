@@ -1,9 +1,12 @@
+import shap
 import streamlit as st
-import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
 from student_performance_xai.src.data.utils import load_data
+from student_performance_xai.src.data.preprocess import preprocess
+from student_performance_xai.src.models.random_forest import train_model
+from student_performance_xai.src.explain.shap_explain import get_shap_explainer
 
 
 st.set_page_config(page_title="Student Performance XAI", layout="wide")
@@ -66,4 +69,27 @@ st.subheader(f"Grade Distribution for Sex = {sex_filter}")
 
 fig, ax = plt.subplots()
 sns.histplot(filtered_df["G3"], bins=15, ax=ax)
+st.pyplot(fig)
+
+
+#####################################################
+st.header("Model Training and Explanation")
+
+st.cache_resource
+def train(df):
+    X, y = preprocess(df)
+    return train_model(X, y)
+
+model, X_train, X_test, y_train, y_test = train(df)
+
+st.subheader("Dataset Preview")
+st.dataframe(df.head())
+
+# ---- SHAP ----
+st.subheader("Global Feature Importance (SHAP)")
+
+explainer, shap_values = get_shap_explainer(model, X_train)
+
+fig, ax = plt.subplots()
+shap.summary_plot(shap_values, X_train, show=False)
 st.pyplot(fig)
