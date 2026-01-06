@@ -28,3 +28,13 @@ pip install -e .
 python scripts/download_dataset.py # again: requires kaggle API token
 streamlit run student_performance_xai/app/app.py
 ```
+
+## Visualizations
+The visualizations for the explainability analyses are built using Streamlit and can be accessed by running the app as described above. The app provides interactive plots and explanations for the student performance prediction models.
+Here are some example visualizations:
+
+<p align="center">
+  <img src="student_performance_xai/report/pdf/random_forest_global_feature_importance.png" width="500">
+  <br>
+  <em>Figure 1: Global SHAP feature importance</em>
+</p>
