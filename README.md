@@ -34,7 +34,7 @@ The visualizations for the explainability analyses are built using Streamlit and
 Here are some example visualizations:
 
 <p align="center">
-  <img src="student_performance_xai/report/pdf/random_forest_global_feature_importance.png" width="500">
+  <img src="student_performance_xai/report/images/random_forest_global_feature_importance.png" width="500">
   <br>
   <em>Figure 1: Global SHAP feature importance</em>
 </p>
