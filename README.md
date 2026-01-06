@@ -10,27 +10,24 @@ effects, and counterfactual explanations.
 Citation for dataset:
 P. Cortez and A. Silva. Using Data Mining to Predict Secondary School Student Performance. In A. Brito and J. Teixeira Eds., Proceedings of 5th FUture BUsiness TEChnology Conference (FUBUTEC 2008) pp. 5-12, Porto, Portugal, April, 2008, EUROSIS, ISBN 978-9077381-39-7.
 
-Note: You will need a kaggle API token to download the dataset 
 
-## Installation of dependencies
+## Running the project (option A: Via Makefile)
+
+### Installation of dependencies
 `make install`
 
-### Running the project (option A: Via Makefile)
-```
-make setup 
-make setup 
-make data
-make train
-make explain
-make app
-```
+### Downloading the data
+Note: You will need a kaggle API token to download the dataset OR you can manually download it and place it in the `data/raw/` folder.
+`make data`
+
+### Starting the app
+`make app`
 
 
 ### Running the project (option B: manual)
 ```
 pip install -r requirements.txt
+pip install -e .
 python scripts/download_dataset.py
-python scripts/train_model.py
-python scripts/run_explainability.py
-streamlit run app/app.py
+streamlit run student_performance_xai/app/app.py
 ```
