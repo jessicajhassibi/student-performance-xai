@@ -4,6 +4,7 @@
 This repository contains the code and experiments for an explainable AI study
 on the UCI Student Performance dataset. Its focused on hypothesis-driven explainability, interaction
 effects, and counterfactual explanations.
+The report is currently being written under [this link](https://www.overleaf.com/read/yfnmzskydwry#766db3)
 
 ## The data
 [UCI Student Performance dataset on kaggle](https://www.kaggle.com/datasets/larsen0966/student-performance-data-set/data).
