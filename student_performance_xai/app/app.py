@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 from student_performance_xai.src.data.utils import load_data
+from student_performance_xai.src.data.eda import univariate_analysis
 from student_performance_xai.src.data.preprocess import preprocess
 from student_performance_xai.src.models.random_forest import train_model
 from student_performance_xai.src.explain.shap_explain import get_shap_explainer
@@ -17,6 +18,12 @@ def get_data():
     return load_data()
 
 df = load_data()
+
+###################################################
+st.header("Univariate Analysis of selected categorical features")
+figs = univariate_analysis(df, selected_columns=["sex", "age", "studytime"])
+for fig in figs:
+    st.pyplot(fig)
 
 ###################################################
 st.header("Student Performance Overview")
