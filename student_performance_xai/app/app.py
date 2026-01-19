@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 from student_performance_xai.src.data.utils import load_data
-from student_performance_xai.src.data.eda import univariate_analysis
+from student_performance_xai.src.data.eda import univariate_analysis, bivariate_analysis
 from student_performance_xai.src.data.preprocess import preprocess
 from student_performance_xai.src.models.random_forest import train_model
 from student_performance_xai.src.explain.shap_explain import get_shap_explainer
@@ -20,64 +20,42 @@ def get_data():
 df = load_data()
 
 ###################################################
-st.header("Univariate Analysis of selected categorical features")
-figs = univariate_analysis(df, selected_columns=["sex", "age", "studytime"])
-for fig in figs:
-    st.pyplot(fig)
+
+st.subheader("Dataset Preview")
+st.dataframe(df.head())
 
 ###################################################
-st.header("Student Performance Overview")
+st.header("Univariate Analysis of selected categorical features")
+figs = univariate_analysis(df, cols=["sex", "age", "studytime"])
+for fig in figs:
+    st.pyplot(fig)
+    plt.close(fig)
 
-fig, ax = plt.subplots()
-sns.histplot(df["G3"], bins=20, kde=True, ax=ax)
-ax.set_xlabel("Final Grade (G3)")
-ax.set_ylabel("Number of Students")
+###################################################
+st.header("Bivariate Analysis")
 
-st.pyplot(fig)
-
-####################################################
-st.subheader("Effect of Study Time on Final Grade")
-
-fig, ax = plt.subplots()
-sns.boxplot(x="studytime", y="G3", data=df, ax=ax)
-ax.set_xlabel("Weekly Study Time Category")
+st.subheader("Distribution of Final Grade by Study Time")
+fig, ax = bivariate_analysis(df, "studytime", "G3")
+ax.set_xlabel("Weekly Study Time (1 = low, 4 = high)")
 ax.set_ylabel("Final Grade (G3)")
-
 st.pyplot(fig)
+plt.close(fig)
 
 #####################################################
-st.subheader("Final Grade by Sex")
-
-fig, ax = plt.subplots()
-sns.boxplot(x="sex", y="G3", data=df, ax=ax)
+st.subheader("Distribution of Final Grade by sex")
+fig, ax = bivariate_analysis(df, "sex", "G3")
 ax.set_xlabel("Sex")
 ax.set_ylabel("Final Grade (G3)")
-
 st.pyplot(fig)
+plt.close(fig)
 
 #####################################################
-st.subheader("Interaction: Study Time and Internet Access")
-
-fig, ax = plt.subplots()
-sns.boxplot(x="studytime", y="G3", hue="internet", data=df, ax=ax)
-ax.set_xlabel("Study Time")
+st.subheader("Distribution of Final Grade by absences")
+fig, ax = bivariate_analysis(df, "absences", "G3")
+ax.set_xlabel("Absences")
 ax.set_ylabel("Final Grade (G3)")
-ax.legend(title="Internet Access")
-
 st.pyplot(fig)
-
-#####################################################
-st.sidebar.header("Filters")
-sex_filter = st.sidebar.selectbox("Select Sex", df["sex"].unique())
-
-filtered_df = df[df["sex"] == sex_filter]
-
-st.subheader(f"Grade Distribution for Sex = {sex_filter}")
-
-fig, ax = plt.subplots()
-sns.histplot(filtered_df["G3"], bins=15, ax=ax)
-st.pyplot(fig)
-
+plt.close(fig)
 
 #####################################################
 st.header("Model Training and Explanation")
@@ -89,14 +67,30 @@ def train(df):
 
 model, X_train, X_test, y_train, y_test = train(df)
 
-st.subheader("Dataset Preview")
-st.dataframe(df.head())
-
 # ---- SHAP ----
-st.subheader("Global Feature Importance (SHAP)")
-
 explainer, shap_values = get_shap_explainer(model, X_train)
 
-fig, ax = plt.subplots()
+st.subheader("Global Feature Importance (SHAP)")
+
 shap.summary_plot(shap_values, X_train, show=False)
+fig = plt.gcf() # get current figure that SHAP created
+if fig.axes:
+    ax.set_title("Global Feature Importance (SHAP)")
 st.pyplot(fig)
+plt.close(fig)
+
+######################################################
+st.subheader("SHAP Dependence Plot for Weekly Study Time")
+
+shap.dependence_plot(
+    "studytime",
+    shap_values,
+    X_train,
+    interaction_index=None,  # main effect only
+    show=False
+)
+fig = plt.gcf()
+if fig.axes:
+    ax.set_title("SHAP Dependence Plot for Weekly Study Time")
+st.pyplot(fig)
+plt.close(fig)
