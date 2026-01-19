@@ -31,11 +31,24 @@ streamlit run student_performance_xai/app/app.py
 ```
 
 ## Visualizations
-The visualizations for the explainability analyses are built using Streamlit and can be accessed by running the app as described above. The app provides interactive plots and explanations for the student performance prediction models.
+The visualizations for the explainability analysis are built using Streamlit and can be accessed by running the app as described above. The app provides interactive plots and explanations for the student performance prediction models.
 Here are some example visualizations:
 
+
 <p align="center">
-  <img src="student_performance_xai/report/images/random_forest_global_feature_importance.png" width="500">
+  <img src="student_performance_xai/report/images/random_forest/abs_global_feature_importance.png" width="500">
+  <br>
+  <em>Figure 1: Shap Feature Importance</em>
+</p>
+
+<p align="center">
+  <img src="student_performance_xai/report/images/random_forest/shap_summary_plot.png" width="500">
   <br>
   <em>Figure 1: Global SHAP feature importance</em>
+</p>
+
+<p align="center">
+  <img src="student_performance_xai/report/images/random_forest/studytime_explainability.png" width="500">
+  <br>
+  <em>Figure 1: Studytime SHAP values</em>
 </p>
