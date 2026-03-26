@@ -1,4 +1,4 @@
-.PHONY: setup data train explain app
+.PHONY: install data app
 
 install:
 	 pip install -r requirements.txt
