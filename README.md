@@ -50,5 +50,5 @@ Here are some example visualizations:
 <p align="center">
   <img src="student_performance_xai/report/images/random_forest/studytime_explainability.png" width="500">
   <br>
-  <em>Figure 1: Studytime SHAP values</em>
+  <em>Figure 1: Weekly studytime SHAP values</em>
 </p>
